@@ -55,6 +55,7 @@ int main(int argc, char **argv)
 
 	bcm2835_gpio_fsel(PIN, BCM2835_GPIO_FSEL_OUTP);
 	play_state state = play_state_stopped;
+	int clock_division = 12;
 
 	while (1)
 	{
@@ -84,7 +85,7 @@ int main(int argc, char **argv)
 				}
 				case 0xF8: // clock tick
 				{
-					if(cnt % 6 == 0) // 
+					if(cnt % clock_division == 0) // 
 					{
 						cnt = 0; // reset clock
 						if(state == play_state_playing)
@@ -95,7 +96,10 @@ int main(int argc, char **argv)
 							bcm2835_gpio_write(PIN, LOW);
 						}
 					}
-					cnt++;
+					
+					if(state == play_state_playing)
+						cnt++;
+					
 					break;
 				}
 				default:
