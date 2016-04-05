@@ -13,9 +13,14 @@ http://www.airspayce.com/mikem/bcm2835/index.html
     gcc -o mirg mirg.c -lbcm2835 -lasound
 	
 #### Usage
-Connect the USB-MIDI device you want to use as master clock. Find out the ALSA ID of your MIDI device:
-    $ amidi -l
-	
+Connect the USB-MIDI device you want to use as master clock. 
+Find out the ALSA ID of your MIDI device:
+
+    amidi -l
+
+
 then use your chosen device, e.g. `hw:1,0,0` as an argument to mirg:
+
     ./mirg hw:1,0,0
+
 Press play on your MIDI device. Mirg provides a Korg-style pulse once every six MIDI clock ticks.
