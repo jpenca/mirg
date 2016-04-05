@@ -2,8 +2,9 @@
 a simple program for the raspberry pi. needs a usb-midi device which sends clock/start/stop, provides korg-style pulse sync on GPIO.
 
 
-#### dependencies
+#### Dependencies
 libasound2-dev is needed for USB-MIDI:
+
     sudo apt-get install libasound2-dev
 
 this bcm2835 library is needed to use the GPIO pins:
