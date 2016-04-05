@@ -74,7 +74,6 @@ int main(int argc, char **argv)
 				}
 				case 0xFB: // continue
 				{
-					cnt = 0;
 					state = play_state_playing;
 					break;
 				}
