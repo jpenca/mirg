@@ -59,12 +59,7 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		uint8_t readByte;
-		err = snd_rawmidi_read(midiin, &readByte, 1);
-		if(err)
-		{
-			errormessage("error reading midi\n");
-			return 1;
-		}
+		snd_rawmidi_read(midiin, &readByte, 1);
 		
 		static unsigned long cnt = 0;
 		if(readByte & 0xF0) // if it's a realtime status byte
