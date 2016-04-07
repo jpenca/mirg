@@ -5,6 +5,12 @@
 // Blinks on RPi Plug P1 pin 11 (which is GPIO pin 17)
 #define PIN RPI_GPIO_P1_11
 
+// there are 12 clock ticks per 8th-note
+#define CLOCK_DIV 12
+
+// we want a 15 ms pulse
+#define PULSE_LEN 15
+
 typedef enum play_state
 {
 	play_state_stopped,
@@ -52,24 +58,22 @@ int main(int argc, char **argv)
 		return 1;
 	}
 		
-
 	bcm2835_gpio_fsel(PIN, BCM2835_GPIO_FSEL_OUTP);
 	play_state state = play_state_stopped;
-	int clock_division = 12;
+	uint8_t ticks = 0;
 
 	while (1)
 	{
-		uint8_t readByte;
-		snd_rawmidi_read(midiin, &readByte, 1);
+		uint8_t status;
+		snd_rawmidi_read(midiin, &status, 1);
 		
-		static unsigned long cnt = 0;
-		if(readByte & 0xF0) // if it's a realtime status byte
+		if(status & 0xF0) 
 		{
-			switch(readByte)
+			switch(status)
 			{
 				case 0xFA: // start
 				{
-					cnt = 0; // reset clock
+					ticks = 0; // reset clock
 					state = play_state_playing;
 					break;
 				}
@@ -85,20 +89,19 @@ int main(int argc, char **argv)
 				}
 				case 0xF8: // clock tick
 				{
-					if(cnt % clock_division == 0) // 
+					if(ticks % CLOCK_DIV == 0) // 
 					{
-						cnt = 0; // reset clock
+						ticks = 0; // reset clock
 						if(state == play_state_playing)
 						{
-							// 15 ms pulse, should be like that according to minilogue manual
 							bcm2835_gpio_write(PIN, HIGH);
-							bcm2835_delay(15);
+							bcm2835_delay(PULSE_LEN);
 							bcm2835_gpio_write(PIN, LOW);
 						}
 					}
 					
 					if(state == play_state_playing)
-						cnt++;
+						ticks++;
 					
 					break;
 				}
