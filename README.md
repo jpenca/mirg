@@ -24,4 +24,4 @@ This will list all connected devices. Use your chosen device, e.g. `hw:1,0,0` as
 
     ./mirg hw:1,0,0
 
-Press play on your MIDI device. Mirg provides a Korg-style pulse every 8th-note (once every 12 MIDI clock ticks) on GPIO pin 17. You'll need to connect a minijack cable to that pin, e.g. use a standard modular patch cable and cut off one end. Connect tip to pin 17, connect sleeve to ground.
+Make sure you MIDI device sends clock/start/stop via USB. Press play on your MIDI device. Mirg creates a Korg-style pulse every 8th-note (once every 12 MIDI clock ticks) on GPIO pin 17. You'll need to connect a minijack cable to that pin, e.g. use a standard modular patch cable and cut off one end. Connect tip to pin 17, connect sleeve to ground.
