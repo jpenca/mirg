@@ -1,6 +1,5 @@
 # mirg
-a simple program for the raspberry pi. needs a usb-midi device which sends clock/start/stop, provides korg-style pulse sync on GPIO.
-
+a simple program for the raspberry pi. Listens to MIDI clock/start/stop on a USB port, provides korg-style pulse sync on GPIO.
 
 #### Dependencies
 libasound2-dev is needed for USB-MIDI:
@@ -10,18 +9,19 @@ libasound2-dev is needed for USB-MIDI:
 this bcm2835 library is needed to use the GPIO pins:
 http://www.airspayce.com/mikem/bcm2835/index.html
 
-#### Compilation
+Follow the instructions on that site for installation.
+
+#### Compile mirg
     gcc -o mirg mirg.c -lbcm2835 -lasound
-	
+
 #### Usage
-Connect the USB-MIDI device you want to use as master clock. 
-Find out the ALSA ID of your MIDI device:
+Connect the USB-MIDI device you want to use as master clock before starting mirg.
+Find out the ALSA ID of your MIDI device using amidi:
 
     amidi -l
 
-
-then use your chosen device, e.g. `hw:1,0,0` as an argument to mirg:
+This will list all connected devices. Use your chosen device, e.g. `hw:1,0,0` as an argument to mirg:
 
     ./mirg hw:1,0,0
 
-Press play on your MIDI device. Mirg provides a Korg-style pulse once every six MIDI clock ticks.
+Press play on your MIDI device. Mirg provides a Korg-style pulse every 8th-note (once every 12 MIDI clock ticks) on GPIO pin 17. You'll need to connect a minijack cable to that pin, e.g. use a standard modular patch cable and cut off one end. Connect tip to pin 17, connect sleeve to ground.
