@@ -1,5 +1,5 @@
 # mirg
-a simple program for the raspberry pi. Listens to MIDI clock/start/stop on a USB port, provides korg-style pulse sync on GPIO.
+a simple program for the raspberry pi. Listens to MIDI clock/start/stop on a USB port, provides korg-style pulse sync on GPIO. For example, this lets you sync Korg Volca or Teeange Engineering OP-XX to any device which provides clock via USB, such as Elektron Analog series or Teenage Engineering OP-1.
 
 #### Dependencies
 libasound2-dev is needed for USB-MIDI:
